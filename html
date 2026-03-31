@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cable Calculator</title>
+<style>
+body{font-family:Arial;padding:15px;background:#f5f5f5}
+input{width:100%;padding:10px;margin:5px 0;font-size:16px}
+button{padding:12px;width:100%;background:#28a745;color:#fff;border:none;font-size:16px}
+.card{background:#fff;padding:15px;margin-top:10px;border-radius:10px}
+</style>
+</head>
+<body>
+
+<h2>Screen 1 (Metal)</h2>
+<input id="size" placeholder="Size">
+<input id="wire" placeholder="Wire">
+<input id="metalNo" placeholder="Metal No">
+<input id="metalRate" placeholder="Metal Rate">
+<button onclick="go2()">Next</button>
+
+<div id="s2" style="display:none">
+<h2>Screen 2 (PVC)</h2>
+<input id="totalWeight" placeholder="Total Weight">
+<input id="rate80" placeholder="PVC 80% Rate">
+<input id="rate20" placeholder="PVC 20% Rate">
+<button onclick="calc()">Calculate</button>
+</div>
+
+<div id="result" class="card"></div>
+
+<script>
+let metalWeight=0, metalPrice=0;
+
+function go2(){
+let s=+size.value, w=+wire.value, m=+metalNo.value, r=+metalRate.value;
+metalWeight = s*s*w*m;
+metalPrice = metalWeight*r;
+s2.style.display="block";
+}
+
+function calc(){
+let total=+totalWeight.value;
+let pvcWeight = total - metalWeight;
+
+let w80 = pvcWeight*0.8;
+let w20 = pvcWeight*0.2;
+
+let p80 = w80 * (+rate80.value);
+let p20 = w20 * (+rate20.value);
+
+let pvcTotal = p80+p20;
+let final = pvcTotal + metalPrice;
+
+result.innerHTML = `
+<b>Metal Weight:</b> ${metalWeight}<br>
+<b>Metal Price:</b> ₹${metalPrice}<br>
+<b>PVC Weight:</b> ${pvcWeight}<br>
+<b>PVC Total:</b> ₹${pvcTotal}<br>
+<h3>Total: ₹${final}</h3>
+`;
+}
+</script>
+
+</body>
+</html>
